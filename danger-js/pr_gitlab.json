@@ -1,0 +1,397 @@
+{
+  "danger": {
+    "git": {
+      "modified_files": [
+        "src/bitx/app/lu/process/loop.go",
+        "src/bitx/services/dbmigrator/ops/loops.go"
+      ],
+      "created_files": [],
+      "deleted_files": [],
+      "commits": [
+        {
+          "sha": "5d6af097226d3622584d3b8ec505c930c7b92d53",
+          "author": {
+            "name": "Ruan Moolman",
+            "email": "ruan@luno.com",
+            "date": "2022-12-08T06:42:28.000Z"
+          },
+          "committer": {
+            "name": "Ruan Moolman",
+            "email": "ruan@luno.com",
+            "date": "2022-12-08T06:42:28.000Z"
+          },
+          "message": "Address comments\n",
+          "parents": [],
+          "url": "https://gitlab.com/lunomoney/product-engineering/core/commit/5d6af097226d3622584d3b8ec505c930c7b92d53",
+          "tree": null
+        },
+        {
+          "sha": "87b1aef17c13d86f827672ab0c14894e3c7a03cc",
+          "author": {
+            "name": "Ruan Moolman",
+            "email": "ruan@luno.com",
+            "date": "2022-12-07T06:51:04.000Z"
+          },
+          "committer": {
+            "name": "Ruan Moolman",
+            "email": "ruan@luno.com",
+            "date": "2022-12-07T06:51:04.000Z"
+          },
+          "message": "lu: ContextLoopUntilSucceeds\n",
+          "parents": [],
+          "url": "https://gitlab.com/lunomoney/product-engineering/core/commit/87b1aef17c13d86f827672ab0c14894e3c7a03cc",
+          "tree": null
+        }
+      ]
+    },
+    "gitlab": {
+      "metadata": {
+        "pullRequestID": "23828",
+        "repoSlug": "lunomoney/product-engineering/core"
+      },
+      "mr": {
+        "id": 192941891,
+        "iid": 23828,
+        "project_id": 33409952,
+        "title": "lu: ContextLoopUntilSucceeds",
+        "description": "",
+        "state": "opened",
+        "created_at": "2022-12-07T06:52:25.382Z",
+        "updated_at": "2022-12-09T12:07:14.671Z",
+        "merged_by": null,
+        "merge_user": null,
+        "merged_at": null,
+        "closed_by": null,
+        "closed_at": null,
+        "target_branch": "master",
+        "source_branch": "ruan-lu-until-succeeds",
+        "user_notes_count": 5,
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": {
+          "id": 10578841,
+          "username": "ruanmoolman",
+          "name": "Ruan Moolman",
+          "state": "active",
+          "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578841/avatar.png",
+          "web_url": "https://gitlab.com/ruanmoolman"
+        },
+        "assignees": [
+          {
+            "id": 10578841,
+            "username": "ruanmoolman",
+            "name": "Ruan Moolman",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578841/avatar.png",
+            "web_url": "https://gitlab.com/ruanmoolman"
+          }
+        ],
+        "assignee": {
+          "id": 10578841,
+          "username": "ruanmoolman",
+          "name": "Ruan Moolman",
+          "state": "active",
+          "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578841/avatar.png",
+          "web_url": "https://gitlab.com/ruanmoolman"
+        },
+        "reviewers": [],
+        "source_project_id": 33409952,
+        "target_project_id": 33409952,
+        "labels": [],
+        "draft": false,
+        "work_in_progress": false,
+        "milestone": null,
+        "merge_when_pipeline_succeeds": false,
+        "merge_status": "can_be_merged",
+        "detailed_merge_status": "discussions_not_resolved",
+        "sha": "5d6af097226d3622584d3b8ec505c930c7b92d53",
+        "merge_commit_sha": null,
+        "squash_commit_sha": null,
+        "discussion_locked": null,
+        "should_remove_source_branch": null,
+        "force_remove_source_branch": true,
+        "reference": "!23828",
+        "references": {
+          "short": "!23828",
+          "relative": "!23828",
+          "full": "lunomoney/product-engineering/core!23828"
+        },
+        "web_url": "https://gitlab.com/lunomoney/product-engineering/core/-/merge_requests/23828",
+        "time_stats": {
+          "time_estimate": 0,
+          "total_time_spent": 0,
+          "human_time_estimate": null,
+          "human_total_time_spent": null
+        },
+        "squash": true,
+        "task_completion_status": {
+          "count": 0,
+          "completed_count": 0
+        },
+        "has_conflicts": false,
+        "blocking_discussions_resolved": false,
+        "approvals_before_merge": null,
+        "subscribed": true,
+        "changes_count": "2",
+        "latest_build_started_at": "2022-12-08T06:43:44.782Z",
+        "latest_build_finished_at": "2022-12-08T06:47:41.436Z",
+        "first_deployed_to_production_at": null,
+        "pipeline": {
+          "id": 716707919,
+          "iid": 129627,
+          "project_id": 33409952,
+          "sha": "5d6af097226d3622584d3b8ec505c930c7b92d53",
+          "ref": "refs/merge-requests/23828/head",
+          "status": "success",
+          "source": "merge_request_event",
+          "created_at": "2022-12-08T06:43:35.947Z",
+          "updated_at": "2022-12-08T06:47:41.446Z",
+          "web_url": "https://gitlab.com/lunomoney/product-engineering/core/-/pipelines/716707919"
+        },
+        "head_pipeline": {
+          "id": 716707919,
+          "iid": 129627,
+          "project_id": 33409952,
+          "sha": "5d6af097226d3622584d3b8ec505c930c7b92d53",
+          "ref": "refs/merge-requests/23828/head",
+          "status": "success",
+          "source": "merge_request_event",
+          "created_at": "2022-12-08T06:43:35.947Z",
+          "updated_at": "2022-12-08T06:47:41.446Z",
+          "web_url": "https://gitlab.com/lunomoney/product-engineering/core/-/pipelines/716707919",
+          "before_sha": "0000000000000000000000000000000000000000",
+          "tag": false,
+          "yaml_errors": null,
+          "user": {
+            "id": 10578841,
+            "username": "ruanmoolman",
+            "name": "Ruan Moolman",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578841/avatar.png",
+            "web_url": "https://gitlab.com/ruanmoolman"
+          },
+          "started_at": "2022-12-08T06:43:44.782Z",
+          "finished_at": "2022-12-08T06:47:41.436Z",
+          "committed_at": null,
+          "duration": 236,
+          "queued_duration": 8,
+          "coverage": null,
+          "detailed_status": {
+            "icon": "status_success",
+            "text": "passed",
+            "label": "passed",
+            "group": "success",
+            "tooltip": "passed",
+            "has_details": true,
+            "details_path": "/lunomoney/product-engineering/core/-/pipelines/716707919",
+            "illustration": null,
+            "favicon": "/assets/ci_favicons/favicon_status_success-8451333011eee8ce9f2ab25dc487fe24a8758c694827a582f17f42b0a90446a2.png"
+          }
+        },
+        "diff_refs": {
+          "base_sha": "322fc70dde0895793269ec85359eea640e3a6847",
+          "head_sha": "5d6af097226d3622584d3b8ec505c930c7b92d53",
+          "start_sha": "f5ee2651febd7e3f53df90634f5559445192e29f"
+        },
+        "merge_error": null,
+        "first_contribution": false,
+        "user": {
+          "can_merge": true
+        }
+      },
+      "commits": [
+        {
+          "id": "5d6af097226d3622584d3b8ec505c930c7b92d53",
+          "short_id": "5d6af097",
+          "created_at": "2022-12-08T06:42:28.000Z",
+          "parent_ids": [],
+          "title": "Address comments",
+          "message": "Address comments\n",
+          "author_name": "Ruan Moolman",
+          "author_email": "ruan@luno.com",
+          "authored_date": "2022-12-08T06:42:28.000Z",
+          "committer_name": "Ruan Moolman",
+          "committer_email": "ruan@luno.com",
+          "committed_date": "2022-12-08T06:42:28.000Z",
+          "trailers": {},
+          "web_url": "https://gitlab.com/lunomoney/product-engineering/core/-/commit/5d6af097226d3622584d3b8ec505c930c7b92d53"
+        },
+        {
+          "id": "87b1aef17c13d86f827672ab0c14894e3c7a03cc",
+          "short_id": "87b1aef1",
+          "created_at": "2022-12-07T06:51:04.000Z",
+          "parent_ids": [],
+          "title": "lu: ContextLoopUntilSucceeds",
+          "message": "lu: ContextLoopUntilSucceeds\n",
+          "author_name": "Ruan Moolman",
+          "author_email": "ruan@luno.com",
+          "authored_date": "2022-12-07T06:51:04.000Z",
+          "committer_name": "Ruan Moolman",
+          "committer_email": "ruan@luno.com",
+          "committed_date": "2022-12-07T06:51:04.000Z",
+          "trailers": {},
+          "web_url": "https://gitlab.com/lunomoney/product-engineering/core/-/commit/87b1aef17c13d86f827672ab0c14894e3c7a03cc"
+        }
+      ],
+      "approvals": {
+        "id": 192941891,
+        "iid": 23828,
+        "project_id": 33409952,
+        "title": "lu: ContextLoopUntilSucceeds",
+        "description": "",
+        "state": "opened",
+        "created_at": "2022-12-07T06:52:25.382Z",
+        "updated_at": "2022-12-09T12:07:14.671Z",
+        "merge_status": "can_be_merged",
+        "approved": true,
+        "approvals_required": 2,
+        "approvals_left": 0,
+        "require_password_to_approve": false,
+        "approved_by": [
+          {
+            "user": {
+              "id": 10141942,
+              "username": "adamhicks",
+              "name": "Adam Hicks",
+              "state": "active",
+              "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10141942/avatar.png",
+              "web_url": "https://gitlab.com/adamhicks"
+            }
+          },
+          {
+            "user": {
+              "id": 10578838,
+              "username": "cgrindlay",
+              "name": "Claudia Grindlay",
+              "state": "active",
+              "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578838/avatar.png",
+              "web_url": "https://gitlab.com/cgrindlay"
+            }
+          }
+        ],
+        "suggested_approvers": [
+          {
+            "id": 12089908,
+            "username": "sujay9",
+            "name": "Sujay Kotwal",
+            "state": "active",
+            "avatar_url": "https://secure.gravatar.com/avatar/852ec8ab1482a451995afc448ec25c3f?s=80&d=identicon",
+            "web_url": "https://gitlab.com/sujay9"
+          },
+          {
+            "id": 10578746,
+            "username": "andreww3",
+            "name": "Andrew Wormald",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578746/avatar.png",
+            "web_url": "https://gitlab.com/andreww3"
+          },
+          {
+            "id": 9483344,
+            "username": "NeilLuno",
+            "name": "Neil Garb",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/9483344/avatar.png",
+            "web_url": "https://gitlab.com/NeilLuno"
+          },
+          {
+            "id": 10578844,
+            "username": "kubilay2",
+            "name": "Kubilay Timucin",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578844/avatar.png",
+            "web_url": "https://gitlab.com/kubilay2"
+          },
+          {
+            "id": 9580603,
+            "username": "wrobinson1",
+            "name": "Wesley Robinson",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/9580603/avatar.png",
+            "web_url": "https://gitlab.com/wrobinson1"
+          },
+          {
+            "id": 11983769,
+            "username": "selim11",
+            "name": "Selim Abeniacar",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/11983769/avatar.png",
+            "web_url": "https://gitlab.com/selim11"
+          },
+          {
+            "id": 10142690,
+            "username": "timothy27",
+            "name": "Timothy Stranex",
+            "state": "active",
+            "avatar_url": "https://secure.gravatar.com/avatar/3d7f09ee2fd4e044c4ebbd4911d889dd?s=80&d=identicon",
+            "web_url": "https://gitlab.com/timothy27"
+          },
+          {
+            "id": 10578699,
+            "username": "mohamed103",
+            "name": "Mohamed Abulgasem",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578699/avatar.png",
+            "web_url": "https://gitlab.com/mohamed103"
+          },
+          {
+            "id": 10780835,
+            "username": "omar122",
+            "name": "Omar Siam",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10780835/avatar.png",
+            "web_url": "https://gitlab.com/omar122"
+          },
+          {
+            "id": 10577105,
+            "username": "jcooper3",
+            "name": "Jonny Cooper",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10577105/avatar.png",
+            "web_url": "https://gitlab.com/jcooper3"
+          },
+          {
+            "id": 10125460,
+            "username": "shiraaz1",
+            "name": "Shiraaz Moollatjie",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10125460/avatar.png",
+            "web_url": "https://gitlab.com/shiraaz1"
+          },
+          {
+            "id": 10578712,
+            "username": "malcolmkmd",
+            "name": "Malcolm Kumwenda",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578712/avatar.png",
+            "web_url": "https://gitlab.com/malcolmkmd"
+          },
+          {
+            "id": 10578833,
+            "username": "vladislav26",
+            "name": "Vladislav Shilov",
+            "state": "active",
+            "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/10578833/avatar.png",
+            "web_url": "https://gitlab.com/vladislav26"
+          }
+        ],
+        "approvers": [],
+        "approver_groups": [],
+        "user_has_approved": false,
+        "user_can_approve": false,
+        "approval_rules_left": [],
+        "has_approval_rules": true,
+        "merge_request_approvers_available": true,
+        "multiple_approval_rules_available": true,
+        "invalid_approvers_rules": []
+      }
+    },
+    "settings": {
+      "github": {
+        "accessToken": "ghp_...",
+        "additionalHeaders": {}
+      },
+      "cliArgs": {}
+    }
+  }
+}
