@@ -5,10 +5,14 @@ import (
 	"bytes"
 	_ "embed"
 	"encoding/json"
+	"errors"
 	"fmt"
+	danger_js "github.com/moolmanruan/danger-go/danger-js"
 	"io"
 	"log"
 	"os"
+	"os/exec"
+	"plugin"
 	"strings"
 )
 
@@ -25,25 +29,69 @@ func Run() {
 	}
 
 	jsonPath := strings.Replace(in, dangerURLPrefix, "", 1)
-	_, err := os.ReadFile(jsonPath)
+	prJSON, err := os.ReadFile(jsonPath)
 	if err != nil {
 		log.Fatalf("failed to read JSON file at %s", jsonPath)
 	}
 
-	// TODO: Invoke the plugin built from the dangerfile.go here...
-
-	resp := DangerResults{
-		Fails:     []Violation{},
-		Messages:  []Violation{},
-		Warnings:  []Violation{},
-		Markdowns: []Violation{},
+	var pr danger_js.PR
+	err = json.Unmarshal(prJSON, &pr)
+	if err != nil {
+		log.Fatalf("failed to unmarshal PR JSON: %s", err.Error())
 	}
-	resp.Warnings = append(resp.Warnings, Violation{Message: "foo bar baz!"})
-	respBB, err := json.Marshal(resp)
+
+	//TODO: Pass in file, not directory
+	//TODO: Build in temp directory
+	libPath, err := buildPlugin("/Users/ruan/danger-go/dangerfile")
+	if err != nil {
+		log.Fatalf("building plugin from dangerfile: %s", err.Error())
+	}
+	fn, err := loadPlugin(libPath)
+	if err != nil {
+		log.Fatalf("loading dangerfile plugin: %s", err.Error())
+	}
+
+	resp := fn(pr)
+	respJSON, err := json.Marshal(resp)
 	if err != nil {
 		log.Fatalf("marshalling response: %s", err.Error())
 	}
-	fmt.Print(string(respBB))
+	fmt.Print(string(respJSON))
+}
+
+func buildPlugin(dangerFilePath string) (string, error) {
+	fmt.Println("Building dangerfile plugin in directory:", dangerFilePath)
+	cmd := exec.Command("go", "build", "-buildmode=plugin", dangerFilePath)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		return "", err
+	}
+	return "dangerfile.so", nil
+}
+
+type MainFunc = func(pr danger_js.PR) DangerResults
+
+func loadPlugin(libPath string) (MainFunc, error) {
+	fmt.Println("Loading dangerfile plugin:", libPath)
+
+	p, err := plugin.Open(libPath)
+	if err != nil {
+		return nil, err
+	}
+
+	dangerSymbol, err := p.Lookup("Run")
+	if err != nil {
+		return nil, err
+	}
+
+	dangerFn, ok := dangerSymbol.(MainFunc)
+	if !ok {
+		return nil, errors.New("failed to cast Danger function")
+	}
+
+	return dangerFn, nil
 }
 
 // readAll reads everything on stdin until io.EOF and returns the result

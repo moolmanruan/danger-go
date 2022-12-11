@@ -1,7 +1,5 @@
 package danger_js
 
-import "time"
-
 type PR struct {
 	Danger struct {
 		Git      Git      `json:"git"`
@@ -26,17 +24,18 @@ type Commit struct {
 	Author    CommitAuthor `json:"author"`
 	Committer CommitAuthor `json:"committer"`
 	Message   string       `json:"message"`
-	Tree      struct {
-		SHA string `json:"sha"`
-		URL string `json:"url"`
-	} `json:"tree"`
-	URL string `json:"url"`
+	//Tree      struct {
+	//	SHA string `json:"sha"`
+	//	URL string `json:"url"`
+	//} `json:"tree"`
+	Tree string `json:"tree"` // local
+	URL  string `json:"url"`
 }
 
 type CommitAuthor struct {
-	Name  string    `json:"name"`
-	Email string    `json:"email"`
-	Date  time.Time `json:"date"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Date  string `json:"date"` //time.Time
 }
 
 type Settings struct {
