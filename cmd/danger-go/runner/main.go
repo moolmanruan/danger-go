@@ -5,10 +5,15 @@ import (
 	"bytes"
 	_ "embed"
 	"encoding/json"
+	"errors"
 	"fmt"
+	danger_js "github.com/moolmanruan/danger-go/danger-js"
 	"io"
 	"log"
 	"os"
+	"os/exec"
+	"path/filepath"
+	"plugin"
 	"strings"
 )
 
@@ -25,25 +30,96 @@ func Run() {
 	}
 
 	jsonPath := strings.Replace(in, dangerURLPrefix, "", 1)
-	_, err := os.ReadFile(jsonPath)
+	prJSON, err := os.ReadFile(jsonPath)
 	if err != nil {
 		log.Fatalf("failed to read JSON file at %s", jsonPath)
 	}
 
-	// TODO: Invoke the plugin built from the dangerfile.go here...
-
-	resp := DangerResults{
-		Fails:     []Violation{},
-		Messages:  []Violation{},
-		Warnings:  []Violation{},
-		Markdowns: []Violation{},
+	var pr danger_js.PR
+	err = json.Unmarshal(prJSON, &pr)
+	if err != nil {
+		log.Fatalf("failed to unmarshal PR JSON: %s", err.Error())
 	}
-	resp.Warnings = append(resp.Warnings, Violation{Message: "foo bar baz!"})
-	respBB, err := json.Marshal(resp)
+
+	dangerFile := "dangerfile.go"
+	// TODO: Find a way to build dangerfile.go that is in project's root... will
+	// have to copy along go.mod & go.sum or create new ones in temp directory.
+	// TODO: Take -d/--dangerfile arg into account
+	libPath, clearTempDir, err := buildPlugin(dangerFile)
+	if err != nil {
+		log.Fatalf("building plugin from dangerfile: %s", err.Error())
+	}
+	defer func() { _ = clearTempDir() }()
+
+	fn, err := loadPlugin(libPath)
+	if err != nil {
+		log.Fatalf("loading dangerfile plugin: %s", err.Error())
+	}
+
+	resp := fn(pr)
+	respJSON, err := json.Marshal(resp)
 	if err != nil {
 		log.Fatalf("marshalling response: %s", err.Error())
 	}
-	fmt.Print(string(respBB))
+	fmt.Print(string(respJSON))
+}
+
+// buildPlugin builds the plugin and stores the artifacts in a temporary
+// directory. If the function succeeds the caller can clear the temporary
+// directory with the returned callback.
+func buildPlugin(dangerFilePath string) (string, func() error, error) {
+	_, err := os.Stat(dangerFilePath)
+	if os.IsNotExist(err) {
+		return "", nil, fmt.Errorf("`%s` does not exist", dangerFilePath)
+	} else if err != nil {
+		return "", nil, fmt.Errorf("getting file state: %w", err)
+	}
+
+	// Create a temporary directory to build the plugin in
+	tempDir, err := os.MkdirTemp("", "danger-go-build-")
+	if err != nil {
+		return "", nil, fmt.Errorf("creating temp directory: %w", err)
+	}
+	var clearTempDir = func() error {
+		return os.RemoveAll(tempDir)
+	}
+
+	outputFile := filepath.Join(tempDir, "dangerfile.so")
+
+	cmd := exec.Command("go", "build", "-o", outputFile, "-buildmode=plugin", dangerFilePath)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	fmt.Printf("Building dangerfile plugin using `%s`\n", dangerFilePath)
+	err = cmd.Run()
+	if err != nil {
+		_ = clearTempDir()
+		return "", nil, err
+	}
+	return outputFile, clearTempDir, nil
+}
+
+type MainFunc = func(pr danger_js.PR) DangerResults
+
+func loadPlugin(libPath string) (MainFunc, error) {
+	fmt.Println("Loading dangerfile plugin:", libPath)
+
+	p, err := plugin.Open(libPath)
+	if err != nil {
+		return nil, err
+	}
+
+	dangerSymbol, err := p.Lookup("Run")
+	if err != nil {
+		return nil, err
+	}
+
+	dangerFn, ok := dangerSymbol.(MainFunc)
+	if !ok {
+		return nil, errors.New("failed to cast Danger function")
+	}
+
+	return dangerFn, nil
 }
 
 // readAll reads everything on stdin until io.EOF and returns the result
