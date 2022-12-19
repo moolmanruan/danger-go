@@ -2,7 +2,6 @@ package danger_js
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -12,30 +11,13 @@ import (
 const dangerJsBinary = "danger"
 const dangerGoBinary = "danger-go"
 
-func runCommand(command string, args ...string) (string, error) {
-	cmd := exec.Command(command, args...)
-	stdout := new(strings.Builder)
-	cmd.Stdout = stdout
-	stderr := new(strings.Builder)
-	cmd.Stderr = stderr
-	if err := cmd.Run(); err != nil {
-		parts := strings.Split(stderr.String(), "\n\n")
-		for _, part := range parts {
-			if strings.HasPrefix(part, "Error") {
-				return "", errors.New(part)
-			}
-		}
-		return "", err
-	}
-	return stdout.String(), nil
-}
-
 func findBinary(name string) (string, error) {
-	dangerBin, err := runCommand("which", name)
+	cmd := exec.Command("which", name)
+	dangerBin, err := cmd.CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("could not find `%s` binary: %w", name, err)
 	}
-	return strings.TrimSpace(dangerBin), nil
+	return strings.TrimSpace(string(dangerBin)), nil
 }
 
 func GetPR(url string, dangerBin string) (PR, error) {
@@ -47,7 +29,8 @@ func GetPR(url string, dangerBin string) (PR, error) {
 		}
 	}
 
-	prJSON, err := runCommand(dangerBin, "pr", url, "--json")
+	cmd := exec.Command(dangerBin, "pr", url, "--json")
+	prJSON, err := cmd.CombinedOutput()
 	if err != nil {
 		return PR{}, fmt.Errorf("could not download PR JSON with danger-js: %w", err)
 	}
