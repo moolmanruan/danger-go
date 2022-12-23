@@ -14,8 +14,11 @@ func Run(pr danger_js.PR) runner.DangerResults {
 		Warnings:  []runner.Violation{},
 		Markdowns: []runner.Violation{},
 	}
-	resp.Messages = append(resp.Messages, runner.Violation{
-		Message: fmt.Sprintf("%d new files added!", len(pr.Danger.Git.CreateFiles)),
-	})
+	addMessage := func(text string) {
+		resp.Messages = append(resp.Messages, runner.Violation{Message: text})
+	}
+
+	addMessage(fmt.Sprintf("%d new files added!", len(pr.Danger.Git.CreateFiles)))
+	addMessage(fmt.Sprintf("%d files modified!", len(pr.Danger.Git.ModifiedFiles)))
 	return resp
 }

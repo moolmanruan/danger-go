@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-const version = "v0.0.1"
+const version = "v0.0.2"
 
 // main entrypoint of the danger-go command
 func main() {

@@ -35,9 +35,11 @@ func Run() {
 		log.Fatalf("failed to read JSON file at %s", jsonPath)
 	}
 
+	//TODO: Figure out why ci doesn't work, but pr and local does?
 	var pr danger_js.PR
 	err = json.Unmarshal(prJSON, &pr)
 	if err != nil {
+		fmt.Println("JSON\n", string(prJSON))
 		log.Fatalf("failed to unmarshal PR JSON: %s", err.Error())
 	}
 
