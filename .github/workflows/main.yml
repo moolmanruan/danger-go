@@ -19,7 +19,8 @@ jobs:
           go-version: '^1.19'
 
       - name: Install danger-go
-        run: go install github.com/moolmanruan/danger-go/cmd/danger-go@latest
+#        run: go install github.com/moolmanruan/danger-go/cmd/danger-go@latest
+        run: go install github.com/moolmanruan/danger-go/cmd/danger-go
 
       - name: Check versions
         run: |
