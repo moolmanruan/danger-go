@@ -1,4 +1,4 @@
-package danger_js
+package dangerJs
 
 type GitCommit struct {
 	SHA       string          `json:"sha"`

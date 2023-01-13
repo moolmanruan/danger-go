@@ -1,6 +1,6 @@
-package runner
+package danger
 
-type DangerResults struct {
+type Results struct {
 	Fails    []Violation `json:"fails"`
 	Warnings []Violation `json:"warnings"`
 	Messages []Violation `json:"messages"`

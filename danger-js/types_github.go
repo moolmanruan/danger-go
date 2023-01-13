@@ -1,4 +1,4 @@
-package danger_js
+package dangerJs
 
 import "time"
 

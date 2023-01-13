@@ -1,14 +1,12 @@
-package danger_js
+package dangerJs
 
-type PR struct {
-	Danger struct {
-		Git    Git    `json:"git"`
-		GitHub GitHub `json:"github,omitempty"`
-		GitLab GitLab `json:"gitlab,omitempty"`
-		// TODO: bitbucket_server
-		// TODO: bitbucket_cloud
-		Settings Settings `json:"settings"`
-	} `json:"danger"`
+type DSL struct {
+	Git    Git    `json:"git"`
+	GitHub GitHub `json:"github,omitempty"`
+	GitLab GitLab `json:"gitlab,omitempty"`
+	// TODO: bitbucket_server
+	// TODO: bitbucket_cloud
+	Settings Settings `json:"settings"`
 }
 
 type FilePath = string
