@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	danger_js "github.com/moolmanruan/danger-go/danger-js"
 	"io"
 	"log"
 	"os"
@@ -15,6 +14,9 @@ import (
 	"path/filepath"
 	"plugin"
 	"strings"
+
+	"github.com/moolmanruan/danger-go"
+	"github.com/moolmanruan/danger-go/danger-js"
 )
 
 const dangerURLPrefix = "danger://dsl/"
@@ -26,21 +28,22 @@ func Run() {
 	in = strings.TrimSpace(in)
 
 	if !strings.HasPrefix(in, dangerURLPrefix) {
-		log.Fatalf("did not receive a Danger URL")
+		log.Fatalf("did not receive a DSL URL")
 	}
 
 	jsonPath := strings.Replace(in, dangerURLPrefix, "", 1)
-	prJSON, err := os.ReadFile(jsonPath)
+	jsonBytes, err := os.ReadFile(jsonPath)
 	if err != nil {
 		log.Fatalf("failed to read JSON file at %s", jsonPath)
 	}
 
-	//TODO: Figure out why ci doesn't work, but pr and local does?
-	var pr danger_js.PR
-	err = json.Unmarshal(prJSON, &pr)
+	var jsonData struct {
+		Danger dangerJs.DSL `json:"danger"`
+	}
+	err = json.Unmarshal(jsonBytes, &jsonData)
 	if err != nil {
-		fmt.Println("JSON\n", string(prJSON))
-		log.Fatalf("failed to unmarshal PR JSON: %s", err.Error())
+		fmt.Println("JSON\n", string(jsonBytes))
+		log.Fatalf("failed to unmarshal DSL JSON: %s", err.Error())
 	}
 
 	dangerFile := "dangerfile.go"
@@ -58,8 +61,9 @@ func Run() {
 		log.Fatalf("loading dangerfile plugin: %s", err.Error())
 	}
 
-	resp := fn(pr)
-	respJSON, err := json.Marshal(resp)
+	d := danger.New()
+	fn(d, jsonData.Danger)
+	respJSON, err := json.Marshal(d.Results)
 	if err != nil {
 		log.Fatalf("marshalling response: %s", err.Error())
 	}
@@ -82,7 +86,7 @@ func buildPlugin(dangerFilePath string) (string, func() error, error) {
 	if err != nil {
 		return "", nil, fmt.Errorf("creating temp directory: %w", err)
 	}
-	var clearTempDir = func() error {
+	clearTempDir := func() error {
 		return os.RemoveAll(tempDir)
 	}
 
@@ -101,7 +105,7 @@ func buildPlugin(dangerFilePath string) (string, func() error, error) {
 	return outputFile, clearTempDir, nil
 }
 
-type MainFunc = func(pr danger_js.PR) DangerResults
+type MainFunc = func(d *danger.T, pr dangerJs.DSL)
 
 func loadPlugin(libPath string) (MainFunc, error) {
 	fmt.Println("Loading dangerfile plugin:", libPath)
@@ -118,7 +122,7 @@ func loadPlugin(libPath string) (MainFunc, error) {
 
 	dangerFn, ok := dangerSymbol.(MainFunc)
 	if !ok {
-		return nil, errors.New("failed to cast Danger function")
+		return nil, errors.New("failed to cast DSL function")
 	}
 
 	return dangerFn, nil

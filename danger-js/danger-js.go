@@ -1,4 +1,4 @@
-package danger_js
+package dangerJs
 
 import (
 	"encoding/json"
@@ -20,24 +20,24 @@ func findBinary(name string) (string, error) {
 	return strings.TrimSpace(string(dangerBin)), nil
 }
 
-func GetPR(url string, dangerBin string) (PR, error) {
+func GetPR(url string, dangerBin string) (DSL, error) {
 	var err error
 	if dangerBin == "" {
 		dangerBin, err = findBinary(dangerJsBinary)
 		if err != nil {
-			return PR{}, err
+			return DSL{}, err
 		}
 	}
 
 	cmd := exec.Command(dangerBin, "pr", url, "--json")
 	prJSON, err := cmd.CombinedOutput()
 	if err != nil {
-		return PR{}, fmt.Errorf("could not download PR JSON with danger-js: %w", err)
+		return DSL{}, fmt.Errorf("could not download DSL JSON with danger-js: %w", err)
 	}
 
-	var pr PR
+	var pr DSL
 	if err = json.Unmarshal([]byte(prJSON), &pr); err != nil {
-		return PR{}, err
+		return DSL{}, err
 	}
 	return pr, nil
 }

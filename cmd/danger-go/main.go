@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/moolmanruan/danger-go/cmd/danger-go/runner"
-	danger_js "github.com/moolmanruan/danger-go/danger-js"
 	"log"
 	"os"
+
+	"github.com/moolmanruan/danger-go/cmd/danger-go/runner"
+	dangerJs "github.com/moolmanruan/danger-go/danger-js"
 )
 
-const version = "v0.0.2"
+const version = "v0.0.3"
 
 // main entrypoint of the danger-go command
 func main() {
@@ -33,7 +34,7 @@ func main() {
 		if len(os.Args) > 2 {
 			rest = os.Args[2:]
 		}
-		err := danger_js.Process(command, rest)
+		err := dangerJs.Process(command, rest)
 		if err != nil {
 			log.Fatalf(err.Error())
 		}
@@ -64,8 +65,8 @@ Options:
   -h, --help     Output usage information
 
 Commands:
-  init           Helps you get started with Danger
-  ci             Runs Danger on CI
-  pr             Runs your local Dangerfile against an existing GitHub PR. Will not post on the PR
+  init           Helps you get started with DSL
+  ci             Runs DSL on CI
+  pr             Runs your local Dangerfile against an existing GitHub DSL. Will not post on the DSL
   runner         Runs a dangerfile against a DSL passed in via STDIN [You probably don't need this]
   local          Runs danger standalone on a repo, useful for git hooks`
