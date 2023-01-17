@@ -1,5 +1,2 @@
-# Node dependecies
-node_modules/
-
 # Golang dynamic libs/pluging
 *.so
