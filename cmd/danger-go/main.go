@@ -13,17 +13,8 @@ const version = "v0.0.3"
 
 // main entrypoint of the danger-go command
 func main() {
-	// require process (always included) and command/flag
-	if len(os.Args) < 2 {
-		fmt.Println(usage)
-	}
-
-	if argsContain("-V", "--version") {
-		fmt.Printf("danger-go %s\n", version)
-		return
-	}
-	if argsContain("-h", "--help") {
-		fmt.Println(usage)
+	if len(os.Args) <= 1 || argsContain("-h", "--help") {
+		fmt.Print(usage)
 		return
 	}
 
@@ -40,6 +31,8 @@ func main() {
 		}
 	case "runner":
 		runner.Run()
+	case "version":
+		fmt.Printf("danger-go %s\n", version)
 	default:
 		log.Fatalf("invalid sub-command `%s`\n\n%s", command, usage)
 	}
@@ -61,12 +54,12 @@ func argsContain(args ...string) bool {
 const usage = `Usage: danger-go [options] [command]
 
 Options:
-  -V, --version  Output the version number
   -h, --help     Output usage information
 
 Commands:
-  init           Helps you get started with DSL
   ci             Runs DSL on CI
+  local          Runs danger standalone on a repo, useful for git hooks
   pr             Runs your local Dangerfile against an existing GitHub DSL. Will not post on the DSL
   runner         Runs a dangerfile against a DSL passed in via STDIN [You probably don't need this]
-  local          Runs danger standalone on a repo, useful for git hooks`
+  version        Show the version of the application
+`
