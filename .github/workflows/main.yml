@@ -7,16 +7,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '^1.19'
+
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
 
       - name: Install Danger JS
         run: npm install -g danger
-
-      - uses: actions/setup-go@v3
-        with:
-          go-version: '^1.19'
 
       - name: Install danger-go
         run: go install github.com/moolmanruan/danger-go/cmd/danger-go@v0.0.3 # match version used in build/ci
@@ -32,3 +32,16 @@ jobs:
         working-directory: ./build/ci
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '^1.19'
+
+      - name: Go tests
+        run: go test -v ./...
