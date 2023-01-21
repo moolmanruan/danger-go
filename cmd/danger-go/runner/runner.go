@@ -63,11 +63,11 @@ func Run() {
 
 	d := danger.New()
 	fn(d, jsonData.Danger)
-	respJSON, err := json.Marshal(d.Results)
+	respJSON, err := d.Results()
 	if err != nil {
 		log.Fatalf("marshalling response: %s", err.Error())
 	}
-	fmt.Print(string(respJSON))
+	fmt.Print(respJSON)
 }
 
 // buildPlugin builds the plugin and stores the artifacts in a temporary
