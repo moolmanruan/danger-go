@@ -1,12 +1,17 @@
 package danger
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
 type T struct {
-	Results Results
+	results Results
 }
 
 func New() *T {
 	return &T{
-		Results: Results{
+		results: Results{
 			Fails:     []Violation{},
 			Messages:  []Violation{},
 			Warnings:  []Violation{},
@@ -15,10 +20,20 @@ func New() *T {
 	}
 }
 
+// Results returns the JSON marshalled from the messages, warnings, failures,
+// and markdowns that was added so far.
+func (s *T) Results() (string, error) {
+	bb, err := json.Marshal(s.results)
+	if err != nil {
+		return "", fmt.Errorf("marshalling results: %w", err)
+	}
+	return string(bb), nil
+}
+
 // Message adds the message to the Danger table. The only difference between
 // this and Warn is the emoji which shows in the table.
 func (s *T) Message(message string, file string, line int) {
-	s.Results.Messages = append(s.Results.Messages,
+	s.results.Messages = append(s.results.Messages,
 		Violation{
 			Message: message,
 			File:    file,
@@ -29,7 +44,7 @@ func (s *T) Message(message string, file string, line int) {
 // Warn adds the message to the Danger table. The message highlights
 // low-priority issues, but does not fail the build.
 func (s *T) Warn(message string, file string, line int) {
-	s.Results.Warnings = append(s.Results.Warnings,
+	s.results.Warnings = append(s.results.Warnings,
 		Violation{
 			Message: message,
 			File:    file,
@@ -39,7 +54,7 @@ func (s *T) Warn(message string, file string, line int) {
 
 // Fail a build, outputting a specific reason for failing into an HTML table.
 func (s *T) Fail(message string, file string, line int) {
-	s.Results.Fails = append(s.Results.Fails,
+	s.results.Fails = append(s.results.Fails,
 		Violation{
 			Message: message,
 			File:    file,
@@ -50,7 +65,7 @@ func (s *T) Fail(message string, file string, line int) {
 // Markdown adds the message as raw markdown into the Danger comment, under the
 // table.
 func (s *T) Markdown(message string, file string, line int) {
-	s.Results.Markdowns = append(s.Results.Markdowns,
+	s.results.Markdowns = append(s.results.Markdowns,
 		Violation{
 			Message: message,
 			File:    file,
