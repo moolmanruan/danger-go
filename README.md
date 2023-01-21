@@ -1,3 +1,4 @@
+
 # Danger in Go
 
 This is a Go version of the popular Danger tool.
@@ -22,10 +23,9 @@ import (
 	"fmt"
 
 	"github.com/moolmanruan/danger-go"
-	"github.com/moolmanruan/danger-go/danger-js"
 )
 
-func Run(d *danger.T, pr dangerJs.DSL) {
+func Run(d *danger.T, pr danger.DSL) {
 	d.Message("danger-go is running!", "", 0)
 }
 ```
