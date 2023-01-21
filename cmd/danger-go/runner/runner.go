@@ -105,7 +105,7 @@ func buildPlugin(dangerFilePath string) (string, func() error, error) {
 	return outputFile, clearTempDir, nil
 }
 
-type MainFunc = func(d *danger.T, pr dangerJs.DSL)
+type MainFunc = func(d *danger.T, pr danger.DSL)
 
 func loadPlugin(libPath string) (MainFunc, error) {
 	fmt.Println("Loading dangerfile plugin:", libPath)
