@@ -24,7 +24,7 @@ jobs:
       - name: Check versions
         run: |
           go version
-          danger-go -V
+          danger-go version
           danger -V
 
       - name: Run danger-go ci
