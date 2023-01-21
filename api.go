@@ -3,7 +3,13 @@ package danger
 import (
 	"encoding/json"
 	"fmt"
+
+	dangerJs "github.com/moolmanruan/danger-go/danger-js"
 )
+
+// DSL wraps the DSL received from danger JS. This allows dangerfiles to only
+// import the root danger package.
+type DSL = dangerJs.DSL
 
 type T struct {
 	results Results
