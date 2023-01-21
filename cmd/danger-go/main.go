@@ -9,7 +9,7 @@ import (
 	dangerJs "github.com/moolmanruan/danger-go/danger-js"
 )
 
-const version = "v0.0.3"
+const version = "v0.1.0"
 
 // main entrypoint of the danger-go command
 func main() {
