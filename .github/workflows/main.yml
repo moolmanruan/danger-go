@@ -19,12 +19,12 @@ jobs:
         run: npm install -g danger
 
       - name: Install danger-go
-        run: go install github.com/moolmanruan/danger-go/cmd/danger-go@v0.0.3 # match version used in build/ci
+        run: go install github.com/moolmanruan/danger-go/cmd/danger-go@v0.1.0 # match version used in build/ci
 
       - name: Check versions
         run: |
           go version
-          danger-go -V
+          danger-go version
           danger -V
 
       - name: Run danger-go ci
