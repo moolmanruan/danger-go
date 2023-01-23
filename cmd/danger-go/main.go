@@ -21,6 +21,7 @@ func main() {
 	command := os.Args[1]
 	switch command {
 	case "ci", "local", "pr":
+		// TODO: extract -d, --dangerfile flag value
 		var rest []string
 		if len(os.Args) > 2 {
 			rest = os.Args[2:]
